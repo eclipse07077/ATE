@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 title: Attested Transition Execution for DAZE-Style Simulator Backdoors
-message: If this artifact helps your work, please cite the poster and this repository.
+message: If this code helps your work, please cite the poster and this repository.
 type: software
 authors:
   - family-names: Lee
@@ -15,4 +15,3 @@ repository-code: https://github.com/eclipse07077/Attested-Transition-Execution-f
 license: MIT
 version: 0.1.0
 date-released: 2026-07-10
-

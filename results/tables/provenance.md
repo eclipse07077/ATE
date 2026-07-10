@@ -1,7 +1,7 @@
-# Promoted Result Provenance
+# Result Provenance
 
-Only rows that pass both integrity and utility gates are listed in the promoted
-tables. Boundary and diagnostic runs are kept out of these tables.
+Only rows that pass both integrity and utility gates are listed in these
+tables. Separate boundary checks are not counted as learning-defense rows.
 
 ## Table 1
 
@@ -15,9 +15,9 @@ tables. Boundary and diagnostic runs are kept out of these tables.
 
 ## Table 2
 
-- `MuJoCo promotion validation` checks the promoted MuJoCo learning rows.
+- `MuJoCo promotion validation` checks the MuJoCo learning rows.
 - `Software-root protocol v3` checks key enrollment, receipt freshness,
   closure binding, and transform governance.
 - `AMC-ATE v2 stress` checks the broader software-root boundary cases.
-- `Brax/JAX GPU receipts` is a systems receipt benchmark, not a promoted GPU
+- `Brax/JAX GPU receipts` is a systems receipt benchmark, not a GPU
   learning-defense row.

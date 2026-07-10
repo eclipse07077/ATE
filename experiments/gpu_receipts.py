@@ -86,18 +86,18 @@ def verify(head: bytes, nonce: bytes, payload: bytes, receipt: bytes, key: bytes
     return hmac.compare_digest(expected, receipt)
 
 
-def write_boundary(args: argparse.Namespace, reason: str) -> None:
+def write_skip_summary(args: argparse.Namespace, reason: str) -> None:
     args.output_dir.mkdir(parents=True, exist_ok=True)
     summary = {
-        "artifact": str(args.output_dir),
-        "boundary": True,
+        "output_dir": str(args.output_dir),
+        "skipped": True,
         "reason": reason,
-        "promote_as_gpu_simulator": False,
+        "full_simulator_benchmark": False,
     }
     (args.output_dir / "summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     (args.output_dir / "summary.md").write_text(
-        "# GPU Batch Receipt Stress\n\n"
-        "Boundary result.\n\n"
+        "# GPU Receipt Benchmark\n\n"
+        "Run skipped.\n\n"
         f"- Reason: {reason}\n",
         encoding="utf-8",
     )
@@ -243,11 +243,11 @@ def main() -> int:
     try:
         import torch
     except Exception as exc:  # noqa: BLE001
-        write_boundary(args, f"torch unavailable: {type(exc).__name__}")
+        write_skip_summary(args, f"torch unavailable: {type(exc).__name__}")
         return 0
 
     if args.device == "cuda" and not torch.cuda.is_available():
-        write_boundary(args, "cuda unavailable")
+        write_skip_summary(args, "cuda unavailable")
         return 0
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
@@ -270,9 +270,9 @@ def main() -> int:
         writer.writerows(tamper_rows)
 
     summary = {
-        "artifact": str(args.output_dir),
-        "boundary": False,
-        "promote_as_gpu_simulator": False,
+        "output_dir": str(args.output_dir),
+        "skipped": False,
+        "full_simulator_benchmark": False,
         "device": args.device,
         "torch_version": torch.__version__,
         "configs": [row["lanes"] for row in rows],
@@ -284,12 +284,12 @@ def main() -> int:
         "tamper_probes": len(tamper_rows),
         "tamper_receipt_accepts": sum(1 for r in tamper_rows if r["accepted_by_receipt"]),
         "epsilon_bias_naive_tolerance_accepts": sum(1 for r in tamper_rows if r["naive_tolerance_would_accept"]),
-        "interpretation": "Synthetic GPU tensor batch receipt stress; not a full GPU simulator benchmark.",
+        "interpretation": "GPU tensor receipt benchmark.",
     }
     (args.output_dir / "summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
 
     lines = [
-        "# GPU Batch Receipt Stress - 2026-07-10",
+        "# GPU Receipt Benchmark",
         "",
         "Synthetic PyTorch CUDA tensor vector-step benchmark with ATE batch receipts.",
         "This benchmark measures the tensor receipt path rather than a full simulator.",
@@ -321,7 +321,7 @@ def main() -> int:
             "Interpretation:",
             "The receipt path rejects transition edits, lane swaps, done flips, stale receipts, wrong-key receipts, and below-tolerance epsilon-bias edits.",
             "The epsilon-bias row is the important security point: a naive tolerance verifier would accept these tiny edits, but receipt provenance rejects them because the learner-visible record hash changes.",
-            "The remaining gap is a true GPU simulator step service or hardware-rooted GPU stack, which is not installed on the current workstation.",
+            "A full GPU simulator service would need to bind the simulator step itself, not only the tensor record path.",
         ]
     )
     (args.output_dir / "summary.md").write_text("\n".join(lines) + "\n", encoding="utf-8")

@@ -76,17 +76,17 @@ def verify(head: bytes, nonce: bytes, body: bytes, receipt: bytes, key: bytes = 
     return hmac.compare_digest(expected, receipt)
 
 
-def write_boundary(args: argparse.Namespace, reason: str) -> None:
+def write_skip_summary(args: argparse.Namespace, reason: str) -> None:
     args.output_dir.mkdir(parents=True, exist_ok=True)
     summary = {
-        "artifact": str(args.output_dir),
-        "boundary": True,
+        "output_dir": str(args.output_dir),
+        "skipped": True,
         "reason": reason,
     }
     (args.output_dir / "summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     (args.output_dir / "summary.md").write_text(
         "# Brax GPU Receipt Benchmark\n\n"
-        "Boundary result.\n\n"
+        "Run skipped.\n\n"
         f"- Reason: {reason}\n",
         encoding="utf-8",
     )
@@ -286,12 +286,12 @@ def main() -> int:
         import jax
         from brax import envs  # noqa: F401
     except Exception as exc:  # noqa: BLE001
-        write_boundary(args, f"jax/brax unavailable: {type(exc).__name__}: {exc}")
+        write_skip_summary(args, f"jax/brax unavailable: {type(exc).__name__}: {exc}")
         return 0
 
     devices = jax.devices()
     if args.device == "gpu" and not any(d.platform == "gpu" for d in devices):
-        write_boundary(args, f"gpu unavailable; devices={devices}")
+        write_skip_summary(args, f"gpu unavailable; devices={devices}")
         return 0
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
@@ -319,8 +319,8 @@ def main() -> int:
             writer.writerows(tamper_rows)
 
     summary = {
-        "artifact": str(args.output_dir),
-        "boundary": False,
+        "output_dir": str(args.output_dir),
+        "skipped": False,
         "jax_version": jax.__version__,
         "devices": [str(d) for d in devices],
         "envs_requested": env_names,
@@ -339,10 +339,10 @@ def main() -> int:
     (args.output_dir / "summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
 
     lines = [
-        "# Brax GPU Receipt Benchmark - 2026-07-10",
+        "# Brax GPU Receipt Benchmark",
         "",
         "Real Brax/JAX GPU simulator vector-step benchmark with ATE batch receipts.",
-        "This is a systems benchmark, not a learning/backdoor promotion row.",
+        "This is a systems benchmark, not a learning/backdoor result.",
         "",
         f"- JAX: `{summary['jax_version']}`",
         f"- Devices: `{', '.join(summary['devices'])}`",
@@ -374,8 +374,8 @@ def main() -> int:
         [
             "",
             "Interpretation:",
-            "Unlike the earlier synthetic CUDA tensor probe, this benchmark runs actual Brax GPU simulator steps.",
-            "It still does not prove remote hardware attestation or learning-loop ASR suppression; it strengthens the systems overhead and tolerant-replay critique.",
+            "This benchmark runs actual Brax GPU simulator steps.",
+            "It measures receipt overhead and tamper rejection, not learning-loop ASR.",
             "Receipt provenance rejects below-tolerance epsilon-bias edits that a naive numeric tolerance gate would admit.",
         ]
     )

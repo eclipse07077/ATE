@@ -53,7 +53,7 @@
   ],
   "systems": [
     {
-      "audit": "MuJoCo promotion validation",
+      "audit": "MuJoCo table validation",
       "records_or_rows": 168,
       "failures": 0
     },
@@ -74,4 +74,3 @@
     }
   ]
 }
-

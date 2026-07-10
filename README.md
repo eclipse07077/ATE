@@ -1,14 +1,14 @@
 # Attested Transition Execution for DAZE-Style Simulator Backdoors
 
-This repository contains the artifact code and promoted result tables for
-**Attested Transition Execution (ATE)**. ATE treats reward-free simulator
-backdoors as transition-provenance failures: the learner accepts an update only
-when an approved measured step relation, deterministic replay, or enrolled
-receipt service vouches for the full learner-visible transition.
+This repository contains code and result tables for **Attested Transition
+Execution (ATE)**. ATE treats reward-free simulator backdoors as
+transition-provenance failures: the learner accepts an update only when an
+approved measured step relation, deterministic replay, or enrolled receipt
+service vouches for the full learner-visible transition.
 
-The scope is deliberately narrow. The simulator wrapper is untrusted, but the
-approved simulator closure and verifier are trusted. See
-[`docs/threat_model.md`](docs/threat_model.md) for the exact boundary.
+We assume an untrusted simulator wrapper around a trusted measured simulator
+closure and verifier. The trust model is summarized in
+[`docs/threat_model.md`](docs/threat_model.md).
 
 ## Repository Layout
 
@@ -17,8 +17,8 @@ src/ate/                 Core hashing, transform, receipt, and gate code
 scripts/                 Table checks and MuJoCo runner entry points
 experiments/             Standalone support experiments
 configs/mujoco/          DAZE/ATE MuJoCo configs used by the runner
-results/promoted/        Tables used by the poster
-results/source_summaries Source summaries for the promoted rows
+results/tables/          Poster tables and row provenance
+results/sources/         Compact source notes for table rows
 docs/                    Threat model and reproduction notes
 paper/                   One-page USENIX poster abstract
 ```
@@ -27,15 +27,21 @@ paper/                   One-page USENIX poster abstract
 
 ```bash
 python -m pip install -e .
-python scripts/reproduce_results.py
-python scripts/run_protocol_audit.py --output-dir results/local/protocol_audit
+python scripts/check_results.py
+python scripts/audit_protocol.py --output-dir results/local/protocol_audit
 ```
 
-`reproduce_results.py` checks that the promoted rows satisfy the stated gates:
-ATE ASR at the clean baseline, zero admitted poisoned updates, and passing
-utility gates.
+`check_results.py` verifies the table gates: ATE ASR at the clean baseline,
+zero admitted poisoned updates, and passing utility checks.
 
-## Main Promoted Evidence
+For the CartPole DQN experiment, install `requirements.txt`. For the Brax/JAX
+receipt benchmark, install `requirements-brax.txt` in a JAX-compatible GPU
+environment.
+
+The dependency and path-scrub checks are recorded in
+[`docs/dependency_check.md`](docs/dependency_check.md).
+
+## Main Results
 
 | Task | Learner | Attack ASR | ATE ASR | Utility | Admitted poisoned updates |
 |---|---|---:|---:|---|---:|
@@ -46,22 +52,21 @@ utility gates.
 | DQN replay relabel | DQN | 0.9080 | 0.0000 | 0.9410 | 0 |
 
 The CSV version is in
-[`results/promoted/table1_learning.csv`](results/promoted/table1_learning.csv).
+[`results/tables/table1_learning.csv`](results/tables/table1_learning.csv).
 
 ## Reproducing Experiments
 
-The light checks run on a laptop. Full MuJoCo DAZE runs require a MuJoCo-capable
-machine and the DAZE continuous-control codebase. See
+The light checks do not require MuJoCo or a GPU. Full MuJoCo DAZE runs require
+a MuJoCo-capable machine and the DAZE continuous-control codebase. See
 [`docs/reproduction.md`](docs/reproduction.md).
 
 ## Citation
 
 ```bibtex
-@software{lee_shin_ate_daze_artifact_2026,
+@software{lee_shin_ate_daze_2026,
   title  = {Attested Transition Execution for DAZE-Style Simulator Backdoors},
   author = {Lee, Jeong Woo and Shin, Yongje},
   year   = {2026},
   url    = {https://github.com/eclipse07077/Attested-Transition-Execution-for-DAZE-Style-Simulator-Backdoors}
 }
 ```
-

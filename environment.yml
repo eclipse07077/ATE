@@ -1,4 +1,4 @@
-name: ate-daze-artifact
+name: ate-daze
 channels:
   - conda-forge
 dependencies:
@@ -11,4 +11,3 @@ dependencies:
   - pip:
       - "torch>=2.2"
       - "gymnasium[classic-control]>=1.0"
-

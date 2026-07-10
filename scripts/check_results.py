@@ -41,8 +41,8 @@ def check_systems(rows: list[dict[str, str]]) -> list[str]:
 
 
 def main() -> int:
-    learning = read_csv(ROOT / "results" / "promoted" / "table1_learning.csv")
-    systems = read_csv(ROOT / "results" / "promoted" / "table2_systems.csv")
+    learning = read_csv(ROOT / "results" / "tables" / "table1_learning.csv")
+    systems = read_csv(ROOT / "results" / "tables" / "table2_systems.csv")
     errors = check_learning(learning) + check_systems(systems)
     summary = {
         "learning_rows": len(learning),
@@ -55,4 +55,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
