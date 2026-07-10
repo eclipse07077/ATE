@@ -1,0 +1,6 @@
+audit,scope,records_or_rows,failures,headline,source
+MuJoCo promotion validation,learning_gate_validation,168,0,all promoted MuJoCo receipt rows pass attack attachment ASR utility and zero-admit gates,mujoco_preexec_receipt_validation
+Software-root protocol v3,receipt_protocol,57,0,key binding sequence nonce closure hash policy hash and transform checks pass,software_root_protocol_v3_audit
+AMC-ATE v2 stress,software_root_boundary,71,0,software-root stress matrix has zero in-scope failures,software_root_amc_ate_v2_stress
+Brax/JAX GPU receipts,batch_receipt_benchmark,1572864,0,batch receipt path has zero false rejects and zero accepted tamper probes,brax_gpu_receipt_benchmark
+

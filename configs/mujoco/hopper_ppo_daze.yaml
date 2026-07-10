@@ -1,0 +1,54 @@
+# Code-faithful Hopper DAZE main reproduction
+total_timesteps: 2_000_000
+learning_rate: 3.0e-4
+num_envs: 1
+num_steps: 2048
+env_id: "Hopper-v5"
+mujoco: 1
+n_eval: 100
+
+seeds:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+
+dazer: "simplex"
+num_daze: 8
+
+n_updates: 512
+True_Bound: 0
+start_poisoning: -1
+batch_incept: 256
+
+robust: 0
+p_rates:
+  - 0.01
+
+exp: false
+dist_type: "nll"
+trigger_scheduler: "quota"
+duration_rounding: "floor"
+
+rew_p: 5
+clip: 0
+
+sn_outer: 0
+daze: 1
+simple_null: 0
+equiv_null: 0
+inception: 0
+trojdrl: 0
+badrl: 0
+badbots: 0
+learned: 0
+
+target_action:
+  - -1.0
+  - -1.0
+  - -1.0
+
+wandb_project_name: "hopper-daze"
+exp_name: "hopper_ppo_daze_cf_k8"
+track: 0

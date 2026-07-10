@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "attested-transition-execution"
+version = "0.1.0"
+description = "Artifact code for Attested Transition Execution against DAZE-style simulator-wrapper backdoors."
+requires-python = ">=3.10"
+dependencies = [
+  "cryptography>=42.0",
+  "numpy>=1.26",
+  "pandas>=2.0",
+  "pyyaml>=6.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+

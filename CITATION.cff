@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+title: Attested Transition Execution for DAZE-Style Simulator Backdoors
+message: If this artifact helps your work, please cite the poster and this repository.
+type: software
+authors:
+  - family-names: Lee
+    given-names: Jeong Woo
+    email: jeongwoolee340@gmail.com
+    affiliation: Semyung University
+  - family-names: Shin
+    given-names: Yongje
+    email: dudujr@semyung.ac.kr
+    affiliation: Semyung University
+repository-code: https://github.com/eclipse07077/Attested-Transition-Execution-for-DAZE-Style-Simulator-Backdoors
+license: MIT
+version: 0.1.0
+date-released: 2026-07-10
+

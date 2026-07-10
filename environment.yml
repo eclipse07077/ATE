@@ -1,0 +1,14 @@
+name: ate-daze-artifact
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - numpy
+  - pandas
+  - pyyaml
+  - cryptography
+  - pip:
+      - "torch>=2.2"
+      - "gymnasium[classic-control]>=1.0"
+

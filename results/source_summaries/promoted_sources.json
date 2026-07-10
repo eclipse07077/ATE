@@ -1,0 +1,77 @@
+{
+  "learning": [
+    {
+      "task": "Hopper-v5 DAZE",
+      "learner": "PPO",
+      "source": "5-seed MuJoCo pre-execution receipt run",
+      "clean_asr": 0.0177,
+      "attack_asr": 0.8435,
+      "ate_asr": 0.0177,
+      "utility": 1.0,
+      "admitted_poisoned_updates": 0
+    },
+    {
+      "task": "Reacher-v5 DAZE",
+      "learner": "PPO",
+      "source": "5-seed MuJoCo pre-execution receipt run",
+      "clean_asr": 0.0,
+      "attack_asr": 0.9843,
+      "ate_asr": 0.0,
+      "utility": 1.0,
+      "admitted_poisoned_updates": 0
+    },
+    {
+      "task": "Reacher-v5 DAZE",
+      "learner": "SAC",
+      "source": "5-seed SAC Reacher ATE gate run",
+      "clean_asr": 0.0,
+      "attack_asr": 0.9996,
+      "ate_asr": 0.0,
+      "utility": "clean-level",
+      "admitted_poisoned_updates": 0
+    },
+    {
+      "task": "CartPole record tamper",
+      "learner": "DQN",
+      "source": "5-seed Gymnasium DQN record-tamper run",
+      "clean_asr": 0.415,
+      "attack_asr": 0.961,
+      "ate_asr": 0.415,
+      "utility": "clean-level",
+      "admitted_poisoned_updates": 0
+    },
+    {
+      "task": "DQN replay relabel",
+      "learner": "DQN",
+      "source": "5-seed custom discrete DQN replay-relabel run",
+      "clean_asr": 0.0,
+      "attack_asr": 0.908,
+      "ate_asr": 0.0,
+      "utility": 0.941,
+      "admitted_poisoned_updates": 0
+    }
+  ],
+  "systems": [
+    {
+      "audit": "MuJoCo promotion validation",
+      "records_or_rows": 168,
+      "failures": 0
+    },
+    {
+      "audit": "Software-root protocol v3",
+      "records_or_rows": 57,
+      "failures": 0
+    },
+    {
+      "audit": "AMC-ATE v2 stress",
+      "records_or_rows": 71,
+      "failures": 0
+    },
+    {
+      "audit": "Brax/JAX GPU receipts",
+      "records_or_rows": 1572864,
+      "failures": 0
+    }
+  ]
+}
+

@@ -1,0 +1,7 @@
+task,simulator_family,learner,attack_type,clean_asr,attack_asr,ate_asr,utility,utility_gate,admitted_poisoned_updates,source
+Hopper-v5 DAZE,MuJoCo,PPO,original_daze,0.0177,0.8435,0.0177,1.0000,pass,0,mujoco_preexec_receipt_2env_5seed
+Reacher-v5 DAZE,MuJoCo,PPO,original_daze,0.0000,0.9843,0.0000,1.0000,pass,0,mujoco_preexec_receipt_2env_5seed
+Reacher-v5 DAZE,MuJoCo,SAC,original_daze,0.0000,0.9996,0.0000,clean-level,pass,0,sac_reacher_oracle_ate_gate_5seed
+CartPole record tamper,Gymnasium,DQN,record_tamper,0.4150,0.9610,0.4150,clean-level,pass,0,cartpole_software_root_receipt_learning_5seed
+DQN replay relabel,custom_discrete,DQN,replay_relabel,0.0000,0.9080,0.0000,0.9410,pass,0,dqn_gridworld_target_replay_relabel_5seed
+
