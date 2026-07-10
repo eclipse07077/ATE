@@ -57,9 +57,10 @@ Jeong Woo Lee and Yongje Shin, Semyung University\\[-0.30em]
 \section*{Design}
 \begin{center}
 \includegraphics[width=0.93\linewidth]{2026-07-08-ATE-diagram-v2.pdf}\\[-0.35em]
-\scriptsize \textbf{Figure 1.} ATE places the admission gate at the transition boundary, not at wrapper self-report. The monitor admits a learner update only when a trusted step relation or receipt path vouches for the submitted action, executed action, state/RNG, and learner-visible fields. This makes action-only logging insufficient for wrapper-level DAZE tampering.
+\scriptsize \textbf{Figure 1.} ATE inserts a transition-admission gate between the wrapper and learner.
 \end{center}
-\vspace{-0.12in}
+\vspace{-0.10in}
+Figure 1 shows why ATE checks learner-visible transitions rather than wrapper self-reports. The gate admits an update only when a measured step relation or receipt path vouches for actions, state/RNG, and learner-visible fields.
 ATE accepts a transition only when the record
 \[
 (s,o,a,T_\theta(a,s,t,\mathrm{rng}),s',o',r,d,\tau)
@@ -81,10 +82,10 @@ Discrete replay relabel & DQN & 0.000 & 0.908/0.933 & 0.000 & 0.941 & 0/all \\
 \bottomrule
 \end{tabularx}
 \vspace{-0.03in}
-\scriptsize \textbf{Table 1.} Positive learning evidence. Clean, Attack, and ATE report attack success rate (ASR); rows are promoted only when the attack attaches and ATE admits zero forged updates while preserving utility. The SAC Reacher row adds cross-learner evidence, while the DQN rows show that the gate is not only a MuJoCo/PPO artifact.
+\scriptsize \textbf{Table 1.} Positive learning evidence across MuJoCo, Gymnasium, and custom replay settings.
 \end{center}
 \vspace{-0.07in}
-The PPO rows are five-seed original-DAZE promotion runs; Attack is minimum unfiltered ASR and ATE/Clean are means. ATE performs 1.49M Hopper and 2.45M Reacher defended checks, admits zero tamper, and matches benign return (1467.62; -6.47). CartPole's natural target base rate makes clean-level ASR the correct endpoint.
+Table 1 reports attack success rate (ASR) for clean, unfiltered attack, and ATE-defended training. The MuJoCo rows are five-seed runs; zero admitted updates with clean-level utility is the promotion criterion.
 
 \section*{Systems Evidence}
 \begin{center}
@@ -100,10 +101,10 @@ Brax/JAX GPU receipts & 1.57M & 0 \\
 \bottomrule
 \end{tabularx}
 \vspace{-0.03in}
-\scriptsize \textbf{Table 2.} Systems evidence for the admission path. Rows/records count validation checks or receipt records; failures count accepted violations or false rejects in the corresponding audit. These results test the software-root protocol, the MuJoCo promotion gate, stress cases, and batched GPU receipt handling.
+\scriptsize \textbf{Table 2.} Systems evidence for the ATE admission path.
 \end{center}
 \vspace{-0.07in}
-The v3 protocol audit rejects rogue keys, closure/policy drift, stale nonces, key swaps, rollback, transition edits, stale/wrong-key receipts, lane mismatch, stale anchors, preflight violations, and transform-governance attacks. Batch receipts amortize cost: CartPole costs 11.18 $\mu$s/record at 1.20$\times$ with 7.0 bytes/record; MuJoCo overhead is 1.01--1.23$\times$; Brax/JAX GPU receipts cost 1.30--1.64$\times$ with 0.137 bytes/record.
+Table 2 counts validation checks or receipt records; failures are accepted violations or false rejects. The audits reject key/closure drift, replay, lane mismatch, transition edits, and unsafe transforms; batch receipts keep overhead at 1.20$\times$ on CartPole and 1.30--1.64$\times$ on Brax/JAX.
 
 \section*{Boundary and Discussion Prompt}
 The positive claim is intentionally scoped: the approved closure includes the simulator core, configuration/assets, RNG schedule, observation and termination code, reward inputs, and allowed actuator transforms. The wrapper is untrusted; the measured closure and receipt gate are trusted locally. Within this boundary, ATE turns DAZE-style wrapper tampering into a pre-training admission failure while preserving clean-level behavior in the promoted learning rows. \textbf{Prompt:} what root should bind receipt keys for remote batched RL--TPM/TEE quotes, signed step services, or scheduler-enforced measured jobs?
