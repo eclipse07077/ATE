@@ -58,18 +58,20 @@ Here $s,o$ denote state/observation; $a$ the submitted action; $T_\theta$ the me
 \section*{Positive Learning Evidence}
 \begin{center}
 \small
-\setlength{\tabcolsep}{3pt}
-\begin{tabularx}{\linewidth}{@{}Ylrrrr@{}}
+\setlength{\tabcolsep}{4.2pt}
+\begin{tabular}{@{}llrrrr@{}}
 \toprule
 Setting & Lrn. & Clean & Attack & ATE & Admit \\
 \midrule
-H/R DAZE & PPO & .0177/.000 & .843/.984 & .0177/.000 & 0 \\
-Reacher DAZE & SAC & .0000 & .9996 & .0000 & 0 \\
-CartPole edit & DQN & .415 & .961 & .415 & 0/80,350 \\
-Replay relabel & DQN & .000 & .908/.933 & .000 & 0/all \\
+Hopper DAZE & PPO & .0177 & .843 & .0177 & 0 \\
+Reacher DAZE & PPO & .000 & .984 & .000 & 0 \\
+Reacher DAZE & SAC & .000 & .9996 & .000 & 0 \\
+CartPole edit & DQN & .415 & .961 & .415 & 0 \\
+Replay relabel & DQN & .000 & .908/.933 & .000 & 0 \\
 \bottomrule
-\end{tabularx}
-\small \textbf{Table 1.} Positive learning evidence across MuJoCo, Gymnasium, and custom replay settings.
+\end{tabular}
+\par\vspace{2pt}
+{\small \textbf{Table 1.} Positive evidence across three simulator families.\par}
 \end{center}
 Table 1 reports Attack Success Rate (ASR); promoted rows preserve clean-level utility and admit zero poisoned updates.
 
