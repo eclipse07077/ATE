@@ -3,7 +3,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{mathptmx}
-\usepackage[margin=0.48in,top=0.37in,bottom=0.40in,columnsep=0.22in]{geometry}
+\usepackage[textwidth=7.00in,textheight=9.00in,columnsep=0.33in,centering]{geometry}
 \usepackage{microtype}
 \usepackage{booktabs}
 \usepackage{tabularx}
@@ -13,120 +13,84 @@
 
 \pagestyle{empty}
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{0.42pt}
-\setlength{\textfloatsep}{1pt}
-\setlength{\floatsep}{1pt}
-\setlength{\intextsep}{1pt}
-\setlength{\abovedisplayskip}{1pt}
-\setlength{\belowdisplayskip}{1pt}
-\setlength{\abovedisplayshortskip}{0pt}
-\setlength{\belowdisplayshortskip}{0pt}
-\renewcommand{\arraystretch}{0.74}
+\setlength{\parskip}{0pt}
+\setlength{\textfloatsep}{6pt plus 1pt minus 1pt}
+\setlength{\floatsep}{5pt plus 1pt minus 1pt}
+\setlength{\intextsep}{5pt plus 1pt minus 1pt}
+\setlength{\abovedisplayskip}{4pt plus 1pt minus 1pt}
+\setlength{\belowdisplayskip}{4pt plus 1pt minus 1pt}
+\renewcommand{\arraystretch}{0.92}
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
-\newcolumntype{C}{>{\centering\arraybackslash}p{0.086\linewidth}}
 \makeatletter
-\renewcommand\section{\@startsection {section}{1}{\z@}{0.45ex plus .08ex minus .08ex}{0.08ex}{\normalfont\large\bfseries}}
+\renewcommand\section{\@startsection {section}{1}{\z@}{-2.0ex plus -0.5ex minus -.2ex}{1.0ex plus .1ex}{\normalfont\large\bfseries}}
 \makeatother
 
-\title{\vspace{-0.58in}\bf Attested Transition Execution for DAZE-Style Simulator Backdoors}
-\author{\normalsize
-Jeong Woo Lee and Yongje Shin, Semyung University\\[-0.30em]
-\small \href{mailto:jeongwoolee340@gmail.com}{jeongwoolee340@gmail.com},
-\href{mailto:dudujr@semyung.ac.kr}{dudujr@semyung.ac.kr}\\[-0.30em]
-\small USENIX Security 2026 Poster Abstract}
-\date{}
-
 \begin{document}
-\maketitle
-\thispagestyle{empty}
-\vspace{-0.64in}
-\small
+\twocolumn[
+\begin{center}
+{\Large\bf Attested Transition Execution for DAZE-Style Simulator Backdoors}\\
+\vspace{0.35em}
+Jeong Woo Lee and Yongje Shin, Semyung University\\
+\small \href{mailto:jeongwoolee340@gmail.com}{jeongwoolee340@gmail.com},
+\href{mailto:dudujr@semyung.ac.kr}{dudujr@semyung.ac.kr}\\
+\small USENIX Security 2026 Poster Abstract
+\end{center}
+\vspace{0.04in}
+]
 
-\begin{abstract}
-\noindent Reinforcement-learning (RL) agents are increasingly trained on third-party simulators, making the simulator a supply-chain trust anchor. DAZE shows that a malicious simulator wrapper can implant reward-free backdoors by changing what transition the learner observes after it submits an action without changing the action itself, so action-level logging cannot detect it~\cite{daze}. Prior RL backdoor work mainly studies policy/agent triggers, competitive backdoors, or sparse targeted attacks~\cite{trojdrl,backdoorl,badrl}; we instead protect the simulator data plane. We study the complementary defense problem under an explicit trust boundary: the simulator core, configuration/assets, random-number state, observation and termination code, reward inputs, and actuator transform are measured and trusted, while the wrapper is untrusted. \emph{Attested Transition Execution} (ATE) accepts a learner-visible update only when an approved measured step relation, exact replay, or an enrolled receipt service vouches for the full transition record. The headline result is zero admitted tampered updates: on original DAZE Hopper-v5 and Reacher-v5 PPO, attack ASR reaches at least 0.8435 and 0.9843, while ATE restores clean-level ASR and matched benign-attested return with ASR-lift 0 and utility 1.0000 over 3.94M defended receipt checks; on SAC Reacher-v5, ASR drops from 0.9996 to 0 with zero forged updates.
-\end{abstract}
+\section*{Abstract}
+RL agents are increasingly trained on third-party simulators, making the simulator a supply-chain trust anchor. DAZE shows that a malicious wrapper can implant reward-free backdoors by changing the learner-visible transition after an action is submitted, so action-level logging can miss the attack~\cite{daze}. Prior RL backdoor work mainly studies policy triggers or sanitization~\cite{trojdrl,backdoorl,badrl}; we protect the simulator data plane. \emph{Attested Transition Execution} (ATE) admits an update only when an approved measured step relation, exact replay, or enrolled receipt service vouches for the full transition record. On original DAZE Hopper/Reacher PPO, ATE restores clean-level ASR/return and admits zero tampered updates; SAC Reacher drops from ASR 0.9996 to 0.
 
 \section*{Claim and Contributions}
-\textbf{Claim.} For an approved measured simulator closure with an untrusted wrapper, DAZE-style transition tampering cannot feed forged learner-visible updates into training without failing ATE admission. Positive results support this claim across PPO/SAC continuous-control MuJoCo, Gymnasium classic control, and a custom discrete DQN replay simulator.
-
-\textbf{Contributions.}
-(i) We frame simulator-wrapper backdoor defense as transition attestation rather than post-hoc anomaly detection.
-(ii) We show action-only logging is insufficient: a Hopper termination-tamper stress case preserves $a_{\rm sub}=a_{\rm exec}$ yet reaches ASR 0.982.
-(iii) ATE restores original-DAZE Hopper/Reacher to clean-level ASR/return, admits zero poisoned updates over 3.94M defended checks, and reduces the action-equality Hopper termination-tamper stress case to ASR 0.009.
+\textbf{Claim.} For an approved measured closure with an untrusted wrapper, DAZE-style transition tampering cannot feed forged updates into training without failing ATE admission. \textbf{Contributions.} (i) We frame wrapper backdoor defense as transition attestation, not anomaly detection. (ii) Action-only logging is insufficient: Hopper termination tampering preserves $a_{\rm sub}=a_{\rm exec}$ yet reaches ASR 0.982. (iii) ATE restores original-DAZE Hopper/Reacher to clean-level ASR/return and admits zero poisoned updates over 3.94M checks.
 
 \section*{Design}
 \begin{center}
-\includegraphics[width=0.93\linewidth]{ate_diagram.png}\\[-0.35em]
-\scriptsize \textbf{Figure 1.} ATE inserts a transition-admission gate between the wrapper and learner.
+\includegraphics[width=0.78\linewidth]{ate_diagram.png}\\
+\small \textbf{Figure 1.} ATE inserts a transition-admission gate between the wrapper and learner.
 \end{center}
-\vspace{-0.10in}
-\begingroup
-\footnotesize
-\setlength{\abovedisplayskip}{0.020in}
-\setlength{\belowdisplayskip}{0.020in}
-Figure 1 shows why ATE checks learner-visible transitions rather than wrapper self-reports. The gate admits an update only when a measured step relation or receipt path vouches for actions, state/RNG, and learner-visible fields.
-ATE admits a transition only if the approved step relation validates this full record:
+ATE checks learner-visible transitions rather than wrapper self-reports, accepting a transition only if the approved step relation validates:
 \[
-(s,o,a,T_\theta(a,s,t,\mathrm{rng}),s',o',r,d,\tau)
+(s,o,a,T_\theta(a,s,t,\mathrm{rng}),s',o',r,d,\tau).
 \]
-where $s$ and $o$ denote the pre-step simulator state and learner observation; $a$ denotes the learner-submitted action; $T_\theta(a,s,t,\mathrm{rng})$ denotes the certified executed action after the measured actuator transform; $s'$ and $o'$ denote the post-step state and observation; $r$ denotes the reward computed from measured inputs; $d$ denotes termination/truncation; and $\tau$ denotes receipt metadata such as nonce, sequence, lane, and key epoch. $T_\theta$ covers legitimate clipping, scaling, action repeat, torque saturation, or safety projection. Exact mode replays deterministic CPU simulators. Receipt mode follows measured-evidence principles from remote attestation architectures~\cite{rats} and checks signatures, freshness, lane identity, and hash-chain continuity.
-\endgroup
+Here $s,o$ denote state/observation; $a$ the submitted action; $T_\theta$ the measured executed action; $s',o'$ post-state/observation; $r$ reward; $d$ termination/truncation; and $\tau$ receipt metadata. $T_\theta$ covers approved actuator transforms; receipt mode follows measured-evidence principles~\cite{rats}.
 
 \section*{Positive Learning Evidence}
 \begin{center}
-\scriptsize
-\begin{tabularx}{\linewidth}{@{}Ylrrrrr@{}}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}Ylrrrr@{}}
 \toprule
-Setting & Learner & Clean & Attack & ATE & Utility & Admit \\
+Setting & Lrn. & Clean & Attack & ATE & Admit \\
 \midrule
-Hopper-v5 DAZE & PPO & 0.0177 & 0.8435 & 0.0177 & 1.0000 & 0 \\
-Reacher-v5 DAZE & PPO & 0.0000 & 0.9843 & 0.0000 & 1.0000 & 0 \\
-Reacher-v5 DAZE & SAC & 0.0000 & 0.9996 & 0.0000 & clean-level & 0 \\
-CartPole record tamper & DQN & 0.415 & 0.961 & 0.415 & clean-level & 0/80,350 \\
-Discrete replay relabel & DQN & 0.000 & 0.908/0.933 & 0.000 & 0.941 & 0/all \\
+H/R DAZE & PPO & .0177/.000 & .843/.984 & .0177/.000 & 0 \\
+Reacher DAZE & SAC & .0000 & .9996 & .0000 & 0 \\
+CartPole edit & DQN & .415 & .961 & .415 & 0/80,350 \\
+Replay relabel & DQN & .000 & .908/.933 & .000 & 0/all \\
 \bottomrule
 \end{tabularx}
-\vspace{-0.03in}
-\scriptsize \textbf{Table 1.} Positive learning evidence across MuJoCo, Gymnasium, and custom replay settings.
+\small \textbf{Table 1.} Positive learning evidence across MuJoCo, Gymnasium, and custom replay settings.
 \end{center}
-\vspace{-0.07in}
-Table 1 reports attack success rate (ASR) for clean, unfiltered attack, and ATE-defended training. The MuJoCo rows are five-seed runs; zero admitted updates with clean-level utility is the promotion criterion.
+Table 1 reports Attack Success Rate (ASR); promoted rows preserve clean-level utility and admit zero poisoned updates.
 
 \section*{Systems Evidence}
-\begin{center}
-\scriptsize
-\begin{tabularx}{\linewidth}{@{}Yrr@{}}
-\toprule
-Audit or benchmark & Rows/records & Failures \\
-\midrule
-MuJoCo promotion validation & 168 & 0 \\
-Software-root protocol v3 & 57 & 0 \\
-AMC-ATE v2 stress & 71 & 0 \\
-Brax/JAX GPU receipts & 1.57M & 0 \\
-\bottomrule
-\end{tabularx}
-\vspace{-0.03in}
-\scriptsize \textbf{Table 2.} Systems evidence for the ATE admission path.
-\end{center}
-\vspace{-0.07in}
-Table 2 counts validation checks or receipt records; failures are accepted violations or false rejects. The audits reject key/closure drift, replay, lane mismatch, transition edits, and unsafe transforms; code and result tables are available in our public repository~\cite{atecode}.
+ATE also passed 168 MuJoCo promotion checks, 57 software-root protocol cases, 71 AMC-ATE stress cases, and 1.57M Brax/JAX GPU receipt records with zero accepted violations or false rejects. Code and result tables are public~\cite{atecode}.
 
-\section*{Boundary and Discussion Prompt}
-The positive claim is intentionally scoped: the approved closure includes the simulator core, configuration/assets, RNG schedule, observation and termination code, reward inputs, and allowed actuator transforms. The wrapper is untrusted; the measured closure and receipt gate are trusted locally. Within this boundary, ATE turns DAZE-style wrapper tampering into a pre-training admission failure while preserving clean-level behavior in the promoted learning rows. \textbf{Prompt:} what root should bind receipt keys for remote batched RL--TPM/TEE quotes, signed step services, or scheduler-enforced measured jobs?
-\textbf{Deployment note.} The strongest current evidence targets exact CPU replay and enrolled software roots; MuJoCo is the representative measured physics engine for the continuous-control rows~\cite{mujoco}. In remote or shared clusters, the same receipt interface can be bound to TPM-style remote integrity verification~\cite{riv}. Malicious approved closures remain an approval-policy failure, not an ATE admission failure.
+\section*{Boundary and Deployment}
+The approved closure covers simulator core, configuration/assets, RNG schedule, observation/termination code, reward inputs, and allowed actuator transforms; the wrapper is untrusted. ATE guarantees admission integrity for that closure, not safety of a maliciously approved closure. Current evidence targets exact CPU replay and software roots; remote clusters can bind receipts to TPM-style integrity verification~\cite{mujoco,riv}.
 
 \begin{thebibliography}{9}
-\scriptsize
+\small
 \setlength{\itemsep}{0pt}
 \setlength{\parskip}{0pt}
-\bibitem{daze} E. Rathbun, W. W. Lin, A. Oprea, and C. Amato. Beware Untrusted Simulators -- Reward-Free Backdoor Attacks in Reinforcement Learning. ICLR, 2026.
-\bibitem{trojdrl} P. Kiourti, K. Wardega, S. Jha, and W. Li. TrojDRL: Trojan Attacks on Deep Reinforcement Learning Agents. DAC, 2020.
-\bibitem{backdoorl} L. Wang, Z. Javed, X. Wu, W. Guo, X. Xing, and D. Song. BACKDOORL: Backdoor Attack against Competitive Reinforcement Learning. IJCAI, 2021.
-\bibitem{badrl} J. Cui, Y. Han, Y. Ma, J. Jiao, and J. Zhang. BadRL: Sparse Targeted Backdoor Attack Against Reinforcement Learning. AAAI, 2024.
-\bibitem{rats} H. Birkholz, D. Thaler, M. Richardson, N. Smith, and W. Pan. RFC 9334: Remote ATtestation procedureS (RATS) Architecture. IETF, 2023.
-\bibitem{atecode} J. W. Lee and Y. Shin. Attested Transition Execution for DAZE-Style Simulator Backdoors: Code and result tables. \href{https://github.com/eclipse07077/Attested-Transition-Execution-for-DAZE-Style-Simulator-Backdoors}{github.com/eclipse07077/ATE-for-DAZE-Style-Backdoors}, 2026.
-\bibitem{mujoco} E. Todorov, T. Erez, and Y. Tassa. MuJoCo: A Physics Engine for Model-Based Control. IROS, 2012.
-\bibitem{riv} G. C. Fedorkow, E. Voit, and J. Fitzgerald-McKay. RFC 9683: Remote Integrity Verification of Network Devices Containing Trusted Platform Modules. IETF, 2024.
+\bibitem{daze} E. Rathbun et al. Beware Untrusted Simulators -- Reward-Free Backdoor Attacks in RL. ICLR, 2026.
+\bibitem{trojdrl} P. Kiourti et al. TrojDRL: Trojan Attacks on Deep RL Agents. DAC, 2020.
+\bibitem{backdoorl} L. Wang et al. BACKDOORL: Backdoor Attack against Competitive RL. IJCAI, 2021.
+\bibitem{badrl} J. Cui et al. BadRL: Sparse Targeted Backdoor Attack Against RL. AAAI, 2024.
+\bibitem{rats} H. Birkholz et al. RFC 9334: RATS Architecture. IETF, 2023.
+\bibitem{atecode} J. W. Lee and Y. Shin. ATE code and result tables. \href{https://github.com/eclipse07077/Attested-Transition-Execution-for-DAZE-Style-Simulator-Backdoors}{GitHub repository}, 2026.
+\bibitem{mujoco} E. Todorov et al. MuJoCo: A Physics Engine for Model-Based Control. IROS, 2012.
+\bibitem{riv} G. C. Fedorkow et al. RFC 9683: RIV with TPMs. IETF, 2024.
 \end{thebibliography}
 
 \end{document}
