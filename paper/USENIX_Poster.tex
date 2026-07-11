@@ -104,7 +104,7 @@ Brax/JAX GPU receipts & 1.57M & 0 \\
 \scriptsize \textbf{Table 2.} Systems evidence for the ATE admission path.
 \end{center}
 \vspace{-0.07in}
-Table 2 counts validation checks or receipt records; failures are accepted violations or false rejects. The audits reject key/closure drift, replay, lane mismatch, transition edits, and unsafe transforms; batch receipts keep overhead at 1.20$\times$ on CartPole and 1.30--1.64$\times$ on Brax/JAX.
+Table 2 counts validation checks or receipt records; failures are accepted violations or false rejects. The audits reject key/closure drift, replay, lane mismatch, transition edits, and unsafe transforms; code and result tables are available in our public repository~\cite{atecode}.
 
 \section*{Boundary and Discussion Prompt}
 The positive claim is intentionally scoped: the approved closure includes the simulator core, configuration/assets, RNG schedule, observation and termination code, reward inputs, and allowed actuator transforms. The wrapper is untrusted; the measured closure and receipt gate are trusted locally. Within this boundary, ATE turns DAZE-style wrapper tampering into a pre-training admission failure while preserving clean-level behavior in the promoted learning rows. \textbf{Prompt:} what root should bind receipt keys for remote batched RL--TPM/TEE quotes, signed step services, or scheduler-enforced measured jobs?
@@ -118,6 +118,7 @@ The positive claim is intentionally scoped: the approved closure includes the si
 \bibitem{backdoorl} L. Wang, Z. Javed, X. Wu, W. Guo, X. Xing, and D. Song. BACKDOORL: Backdoor Attack against Competitive Reinforcement Learning. IJCAI, 2021.
 \bibitem{badrl} J. Cui, Y. Han, Y. Ma, J. Jiao, and J. Zhang. BadRL: Sparse Targeted Backdoor Attack Against Reinforcement Learning. AAAI, 2024.
 \bibitem{rats} H. Birkholz, D. Thaler, M. Richardson, N. Smith, and W. Pan. RFC 9334: Remote ATtestation procedureS (RATS) Architecture. IETF, 2023.
+\bibitem{atecode} J. W. Lee and Y. Shin. Attested Transition Execution for DAZE-Style Simulator Backdoors: Code and result tables. \href{https://github.com/eclipse07077/Attested-Transition-Execution-for-DAZE-Style-Simulator-Backdoors}{github.com/eclipse07077/ATE-for-DAZE-Style-Backdoors}, 2026.
 \end{thebibliography}
 
 \end{document}
