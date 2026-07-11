@@ -10,9 +10,10 @@
 \usepackage{array}
 \usepackage{graphicx}
 \usepackage[hidelinks]{hyperref}
+\usepackage{indentfirst}
 
 \pagestyle{empty}
-\setlength{\parindent}{0pt}
+\setlength{\parindent}{0.75em}
 \setlength{\parskip}{0pt}
 \setlength{\textfloatsep}{6pt plus 1pt minus 1pt}
 \setlength{\floatsep}{5pt plus 1pt minus 1pt}
@@ -46,14 +47,14 @@ RL agents are increasingly trained on third-party simulators, making the simulat
 
 \section*{Design}
 \begin{center}
-\makebox[\linewidth][c]{\includegraphics[width=1.12\linewidth]{ate_diagram.png}}\\
+\includegraphics[width=\linewidth,trim=13bp 12bp 6bp 13bp,clip]{ate_diagram.png}\\
 \small \textbf{Figure 1.} ATE inserts a transition-admission gate between the wrapper and learner.
 \end{center}
-ATE checks learner-visible transitions rather than wrapper self-reports, accepting a transition only if the approved step relation validates:
-\[
+\indent ATE checks learner-visible transitions rather than wrapper self-reports, accepting a transition only if the approved step relation validates:
+\begin{equation}
 (s,o,a,T_\theta(a,s,t,\mathrm{rng}),s',o',r,d,\tau).
-\]
-Here $s,o$ denote state/observation; $a$ the submitted action; $T_\theta$ the measured executed action; $s',o'$ post-state/observation; $r$ reward; $d$ termination/truncation; and $\tau$ receipt metadata. $T_\theta$ covers approved actuator transforms; receipt mode follows measured-evidence principles~\cite{rats}.
+\end{equation}
+\indent Here $s,o$ denote state/observation; $a$ the submitted action; $T_\theta$ the measured executed action; $s',o'$ post-state/observation; $r$ reward; $d$ termination/truncation; and $\tau$ receipt metadata. $T_\theta$ covers approved actuator transforms; receipt mode follows measured-evidence principles~\cite{rats}.
 
 \section*{Positive Learning Evidence}
 \begin{center}
