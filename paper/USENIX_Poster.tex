@@ -61,11 +61,11 @@ Jeong Woo Lee and Yongje Shin, Semyung University\\[-0.30em]
 \end{center}
 \vspace{-0.10in}
 Figure 1 shows why ATE checks learner-visible transitions rather than wrapper self-reports. The gate admits an update only when a measured step relation or receipt path vouches for actions, state/RNG, and learner-visible fields.
-ATE accepts a transition only when the record
+ATE admits a transition only if the approved step relation validates this full record:
 \[
 (s,o,a,T_\theta(a,s,t,\mathrm{rng}),s',o',r,d,\tau)
 \]
-matches the approved step relation. $T_\theta$ is a measured declarative actuator transform for legitimate clipping, scaling, action repeat, torque saturation, or safety projection. Exact mode replays deterministic CPU simulators. Receipt mode follows measured-evidence principles from remote attestation architectures~\cite{rats}: it binds the public key to code, dependencies, closure hash, verifier policy, socket identity, nonce, service id, and key epoch; admission checks signatures, sequence numbers, nonces, lane identity, and hash-chain continuity.
+Here $T_\theta$ is a measured declarative actuator transform for legitimate clipping, scaling, action repeat, torque saturation, or safety projection. Exact mode replays deterministic CPU simulators. Receipt mode follows measured-evidence principles from remote attestation architectures~\cite{rats}: it binds the public key to code, dependencies, closure hash, verifier policy, socket identity, nonce, service id, and key epoch; admission checks signatures, sequence numbers, nonces, lane identity, and hash-chain continuity.
 
 \section*{Positive Learning Evidence}
 \begin{center}
