@@ -67,6 +67,6 @@ a MuJoCo-capable machine and the DAZE continuous-control codebase. See
   title  = {Attested Transition Execution for DAZE-Style Simulator Backdoors},
   author = {Lee, Jeong Woo and Shin, Yongje},
   year   = {2026},
-  url    = {https://github.com/eclipse07077/Attested-Transition-Execution-for-DAZE-Style-Simulator-Backdoors}
+  url    = {https://github.com/eclipse07077/ATE}
 }
 ```
