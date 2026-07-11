@@ -113,6 +113,7 @@ Table 2 counts validation checks or receipt records; failures are accepted viola
 
 \section*{Boundary and Discussion Prompt}
 The positive claim is intentionally scoped: the approved closure includes the simulator core, configuration/assets, RNG schedule, observation and termination code, reward inputs, and allowed actuator transforms. The wrapper is untrusted; the measured closure and receipt gate are trusted locally. Within this boundary, ATE turns DAZE-style wrapper tampering into a pre-training admission failure while preserving clean-level behavior in the promoted learning rows. \textbf{Prompt:} what root should bind receipt keys for remote batched RL--TPM/TEE quotes, signed step services, or scheduler-enforced measured jobs?
+\textbf{Deployment note.} The strongest current evidence targets exact CPU replay and enrolled software roots; MuJoCo is the representative measured physics engine for the continuous-control rows~\cite{mujoco}. In remote or shared clusters, the same receipt interface can be bound to TPM-style remote integrity verification~\cite{riv}. Malicious approved closures remain an approval-policy failure, not an ATE admission failure.
 
 \begin{thebibliography}{9}
 \scriptsize
@@ -124,6 +125,8 @@ The positive claim is intentionally scoped: the approved closure includes the si
 \bibitem{badrl} J. Cui, Y. Han, Y. Ma, J. Jiao, and J. Zhang. BadRL: Sparse Targeted Backdoor Attack Against Reinforcement Learning. AAAI, 2024.
 \bibitem{rats} H. Birkholz, D. Thaler, M. Richardson, N. Smith, and W. Pan. RFC 9334: Remote ATtestation procedureS (RATS) Architecture. IETF, 2023.
 \bibitem{atecode} J. W. Lee and Y. Shin. Attested Transition Execution for DAZE-Style Simulator Backdoors: Code and result tables. \href{https://github.com/eclipse07077/Attested-Transition-Execution-for-DAZE-Style-Simulator-Backdoors}{github.com/eclipse07077/ATE-for-DAZE-Style-Backdoors}, 2026.
+\bibitem{mujoco} E. Todorov, T. Erez, and Y. Tassa. MuJoCo: A Physics Engine for Model-Based Control. IROS, 2012.
+\bibitem{riv} G. C. Fedorkow, E. Voit, and J. Fitzgerald-McKay. RFC 9683: Remote Integrity Verification of Network Devices Containing Trusted Platform Modules. IETF, 2024.
 \end{thebibliography}
 
 \end{document}
